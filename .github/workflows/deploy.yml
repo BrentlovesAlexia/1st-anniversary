@@ -33,7 +33,6 @@ jobs:
         run: npm install
 
       - name: Map Replit Assets to Your Photos
-        # Safe fix: We are targeting ONLY the components/pages folder so Tailwind styles never get corrupted
         run: |
           find src/components src/pages -type f \( -name "*.tsx" -o -name "*.jsx" \) -exec sed -i 's|[^"'"'"']*1st_Favorite_photo[^"'"'"']*\.png|/photos/photo-1.png|g' {} + 2>/dev/null || true
           find src/components src/pages -type f \( -name "*.tsx" -o -name "*.jsx" \) -exec sed -i 's|[^"'"'"']*2nd_favorite_photo[^"'"'"']*\.png|/photos/photo-2.png|g' {} + 2>/dev/null || true
@@ -44,15 +43,17 @@ jobs:
           find src/components src/pages -type f \( -name "*.tsx" -o -name "*.jsx" \) -exec sed -i 's|[^"'"'"']*my_favorite_thing_you_gave_me[^"'"'"']*\.png|/photos/photo-7.png|g' {} + 2>/dev/null || true
           find src/components src/pages -type f \( -name "*.tsx" -o -name "*.jsx" \) -exec sed -i 's|[^"'"'"']*our_first_date[^"'"'"']*\.png|/photos/photo-1.png|g' {} + 2>/dev/null || true
 
-      - name: Overwrite Vite Config with Perfect Settings
+      - name: Overwrite Vite Config with Tailwind v4 Plugin Setup
+        # This attaches the missing @tailwindcss/vite plugin so your CSS compiled properly
         run: |
           cat << 'EOF' > vite.config.ts
           import { defineConfig } from 'vite';
           import react from '@vitejs/plugin-react';
+          import tailwindcss from '@tailwindcss/vite';
           import path from 'path';
 
           export default defineConfig({
-            plugins: [react()],
+            plugins: [react(), tailwindcss()],
             base: '/1st-anniversary/',
             resolve: {
               alias: {
@@ -76,3 +77,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        
