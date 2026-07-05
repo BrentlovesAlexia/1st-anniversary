@@ -44,7 +44,6 @@ jobs:
           find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|[^"'"'"']*our_first_date[^"'"'"']*\.png|/photos/photo-1.png|g' {} +
 
       - name: Overwrite Vite Config with Perfect Settings
-        # This completely replaces the complex Replit configuration with a streamlined GitHub Pages file
         run: |
           cat << 'EOF' > vite.config.ts
           import { defineConfig } from 'vite';
@@ -75,5 +74,5 @@ jobs:
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v4.3.0 # 👈 Pinning to explicitly fixed micro-version
         
