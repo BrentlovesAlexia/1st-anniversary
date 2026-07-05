@@ -34,15 +34,15 @@ jobs:
 
       - name: Map Replit Assets to Your Photos
         run: |
-          # Exactly mapping your photos to their matching memory cards in the code
-          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|.*1st_Favorite_photo.*\.png|"./photos/photo-1.png"|g' {} +
-          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|.*2nd_favorite_photo.*\.png|"./photos/photo-2.png"|g' {} +
-          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|.*ate_together.*\.png|"./photos/photo-3.png"|g' {} +
-          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|.*first_holding_hands.*\.png|"./photos/photo-4.png"|g' {} +
-          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|.*first_photo_i_took_of_you.*\.png|"./photos/photo-5.png"|g' {} +
-          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|.*first_photo_you_gave_me.*\.png|"./photos/photo-6.png"|g' {} +
-          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|.*my_favorite_thing_you_gave_me.*\.png|"./photos/photo-7.png"|g' {} +
-          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|.*our_first_date.*\.png|"./photos/photo-1.png"|g' {} +
+          # Cleaned up quotation marks to avoid syntax errors in your code files
+          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|[^"'"'"']*1st_Favorite_photo[^"'"'"']*\.png|./photos/photo-1.png|g' {} +
+          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|[^"'"'"']*2nd_favorite_photo[^"'"'"']*\.png|./photos/photo-2.png|g' {} +
+          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|[^"'"'"']*ate_together[^"'"'"']*\.png|./photos/photo-3.png|g' {} +
+          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|[^"'"'"']*first_holding_hands[^"'"'"']*\.png|./photos/photo-4.png|g' {} +
+          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|[^"'"'"']*first_photo_i_took_of_you[^"'"'"']*\.png|./photos/photo-5.png|g' {} +
+          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|[^"'"'"']*first_photo_you_gave_me[^"'"'"']*\.png|./photos/photo-6.png|g' {} +
+          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|[^"'"'"']*my_favorite_thing_you_gave_me[^"'"'"']*\.png|./photos/photo-7.png|g' {} +
+          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|[^"'"'"']*our_first_date[^"'"'"']*\.png|./photos/photo-1.png|g' {} +
 
       - name: Build project
         run: npm run build
