@@ -36,6 +36,7 @@ jobs:
         run: npm run build
         env:
           PORT: 5173
+          BASE_PATH: /1st-anniversary/ # 👈 Bypasses the BASE_PATH check and points to your repo path
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
