@@ -44,13 +44,14 @@ jobs:
           find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|[^"'"'"']*our_first_date[^"'"'"']*\.png|../../public/photos/photo-1.png|g' {} +
 
       - name: Force Vite Config Base Path
-        # This mobile-friendly step injects the dynamic GitHub base path directly into your vite.config.ts automatically
         run: |
           sed -i "s|base:.*|base: '/${{ github.event.repository.name }}/',|g" vite.config.ts || true
           sed -i "/export default defineConfig({/a \  base: '/${{ github.event.repository.name }}/'," vite.config.ts
 
       - name: Build project
         run: npm run build
+        env:
+          PORT: 5173 # 👈 Feeds the required PORT variable into the build step to stop the crash
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
