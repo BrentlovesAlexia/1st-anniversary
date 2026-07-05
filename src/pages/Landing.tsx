@@ -122,7 +122,7 @@ export default function Landing() {
             Happy Anniversary
           </h1>
           <p className="text-sm text-pink-400 font-light">
-            Enter any 4 digits to begin
+            Enter our anniversary bebi
           </p>
         </div>
 
