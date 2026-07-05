@@ -34,6 +34,8 @@ jobs:
 
       - name: Build project
         run: npm run build
+        env:
+          PORT: 5173
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
