@@ -51,7 +51,8 @@ jobs:
       - name: Build project
         run: npm run build
         env:
-          PORT: 5173 # 👈 Feeds the required PORT variable into the build step to stop the crash
+          PORT: 5173
+          BASE_PATH: /${{ github.event.repository.name }}/  # 👈 Hands the config exact variable it wants
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
