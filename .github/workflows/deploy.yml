@@ -32,11 +32,28 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Create Mock Attached Assets
+        run: |
+          # Creates the missing folder one level above your repository directory
+          mkdir -p ../attached_assets
+          
+          # Creates a tiny 1x1 pixel transparent PNG base file
+          echo "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" | base64 -d > ../attached_assets/base.png
+          
+          # Generates mock copies for all 7 files Vite is looking for
+          cp ../attached_assets/base.png ../attached_assets/my_favorite_thing_you_gave_me_1783262121146.png
+          cp ../attached_assets/base.png ../attached_assets/2nd_favorite_photo_1783262120879.png
+          cp ../attached_assets/base.png ../attached_assets/ate_together_1783262120934.png
+          cp ../attached_assets/base.png ../attached_assets/first_holding_hands_1783262121008.png
+          cp ../attached_assets/base.png ../attached_assets/first_photo_i_took_of_you_1783262121056.png
+          cp ../attached_assets/base.png ../attached_assets/1st_Favorite_photo_1783262120729.png
+          cp ../attached_assets/base.png ../attached_assets/our_first_date_1783262120790.png
+
       - name: Build project
         run: npm run build
         env:
           PORT: 5173
-          BASE_PATH: /1st-anniversary/ # 👈 Bypasses the BASE_PATH check and points to your repo path
+          BASE_PATH: /1st-anniversary/
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
