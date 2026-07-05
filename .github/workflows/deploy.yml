@@ -27,7 +27,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22 # 👈 Switches to stable Node 22 to clear the deprecation/version warnings
+          node-version: 22
 
       - name: Install dependencies
         run: npm install
@@ -43,14 +43,17 @@ jobs:
           find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|[^"'"'"']*my_favorite_thing_you_gave_me[^"'"'"']*\.png|../../public/photos/photo-7.png|g' {} +
           find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|[^"'"'"']*our_first_date[^"'"'"']*\.png|../../public/photos/photo-1.png|g' {} +
 
+      - name: Force Vite Config Base Path
+        # This mobile-friendly step injects the dynamic GitHub base path directly into your vite.config.ts automatically
+        run: |
+          sed -i "s|base:.*|base: '/${{ github.event.repository.name }}/',|g" vite.config.ts || true
+          sed -i "/export default defineConfig({/a \  base: '/${{ github.event.repository.name }}/'," vite.config.ts
+
       - name: Build project
         run: npm run build
-        env:
-          PORT: 5173
-          BASE_PATH: /1st-anniversary/
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5 # 👈 Upgraded to v5
+        uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -59,5 +62,5 @@ jobs:
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4 # Keep v4 for deployment step stability
+        uses: actions/deploy-pages@v4
         
