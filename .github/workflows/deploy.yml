@@ -32,22 +32,17 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Create Mock Attached Assets
+      - name: Map Replit Assets to Your Photos
         run: |
-          # Creates the missing folder one level above your repository directory
-          mkdir -p ../attached_assets
-          
-          # Creates a tiny 1x1 pixel transparent PNG base file
-          echo "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" | base64 -d > ../attached_assets/base.png
-          
-          # Generates mock copies for all 7 files Vite is looking for
-          cp ../attached_assets/base.png ../attached_assets/my_favorite_thing_you_gave_me_1783262121146.png
-          cp ../attached_assets/base.png ../attached_assets/2nd_favorite_photo_1783262120879.png
-          cp ../attached_assets/base.png ../attached_assets/ate_together_1783262120934.png
-          cp ../attached_assets/base.png ../attached_assets/first_holding_hands_1783262121008.png
-          cp ../attached_assets/base.png ../attached_assets/first_photo_i_took_of_you_1783262121056.png
-          cp ../attached_assets/base.png ../attached_assets/1st_Favorite_photo_1783262120729.png
-          cp ../attached_assets/base.png ../attached_assets/our_first_date_1783262120790.png
+          # Exactly mapping your photos to their matching memory cards in the code
+          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|.*1st_Favorite_photo.*\.png|"./photos/photo-1.png"|g' {} +
+          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|.*2nd_favorite_photo.*\.png|"./photos/photo-2.png"|g' {} +
+          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|.*ate_together.*\.png|"./photos/photo-3.png"|g' {} +
+          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|.*first_holding_hands.*\.png|"./photos/photo-4.png"|g' {} +
+          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|.*first_photo_i_took_of_you.*\.png|"./photos/photo-5.png"|g' {} +
+          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|.*first_photo_you_gave_me.*\.png|"./photos/photo-6.png"|g' {} +
+          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|.*my_favorite_thing_you_gave_me.*\.png|"./photos/photo-7.png"|g' {} +
+          find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec sed -i 's|.*our_first_date.*\.png|"./photos/photo-1.png"|g' {} +
 
       - name: Build project
         run: npm run build
