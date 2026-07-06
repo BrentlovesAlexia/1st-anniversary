@@ -3,7 +3,7 @@ import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 
 const PHOTOS = [
-  // 📸 Original 7 Photos
+  // 📸 Original 7 Photos (Grid)
   { src: "/1st-anniversary/photos/photo-1.png", label: "1st favorite photo", isAlbum: false },
   { src: "/1st-anniversary/photos/photo-2.png", label: "Playing around", isAlbum: false },
   { src: "/1st-anniversary/photos/photo-3.png", label: "Ate together", isAlbum: false },
@@ -12,7 +12,7 @@ const PHOTOS = [
   { src: "/1st-anniversary/photos/photo-6.png", label: "First photo you gave me", isAlbum: false },
   { src: "/1st-anniversary/photos/photo-7.png", label: "My favorite thing you gave me", isAlbum: false },
   
-  // 📚 School Album Collection (Up to Photo 17)
+  // 📚 School Album Collection (Stack)
   { src: "/1st-anniversary/photos/(album) photo-8.png", label: "school photo taking :>", isAlbum: true },
   { src: "/1st-anniversary/photos/(album) photo-9.png", label: "school photo taking :>", isAlbum: true },
   { src: "/1st-anniversary/photos/(album) photo-10.png", label: "school photo taking :>", isAlbum: true },
@@ -28,6 +28,13 @@ const PHOTOS = [
 export default function Gallery() {
   const [, setLocation] = useLocation();
   const [selectedPhoto, setSelectedPhoto] = useState<{ src: string; label: string; isAlbum: boolean } | null>(null);
+  
+  // Tracks if the school album stack has been clicked to open/expand
+  const [isStackExpanded, setIsStackExpanded] = useState(false);
+
+  // Separate the arrays
+  const gridPhotos = PHOTOS.filter(p => !p.isAlbum);
+  const albumPhotos = PHOTOS.filter(p => p.isAlbum);
 
   return (
     <motion.div
@@ -61,7 +68,7 @@ export default function Gallery() {
           data-testid="btn-back"
         >
           ← Back
-         </motion.button>
+        </motion.button>
 
         {/* Header */}
         <motion.div
@@ -81,62 +88,102 @@ export default function Gallery() {
           </h1>
         </motion.div>
 
-        {/* Photo Grid */}
-        <motion.div
-          className="grid grid-cols-2 gap-4 w-full"
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.05 } },
-          }}
-        >
-          {PHOTOS.map((photo, i) => (
+        {/* Standard Grid for Original Photos */}
+        <div className="grid grid-cols-2 gap-4 w-full mb-10">
+          {gridPhotos.map((photo, i) => (
             <motion.div
               key={i}
-              className={`gallery-item relative aspect-square overflow-hidden group cursor-pointer rounded-2xl border shadow-sm transition-all duration-300 ${
-                photo.isAlbum 
-                  ? "border-pink-200/40 bg-pink-50/10 ring-4 ring-pink-100/20" 
-                  : "border-pink-100/30 bg-white/40"
-              }`}
-              variants={{
-                hidden: { opacity: 0, y: 20, scale: 0.95 },
-                visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.4 } },
-              }}
-              whileHover={{ scale: 1.03 }}
+              className="gallery-item relative aspect-square overflow-hidden group cursor-pointer rounded-2xl border border-pink-100/30 bg-white/40 shadow-sm"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.04 }}
+              whileHover={{ scale: 1.02 }}
               onClick={() => setSelectedPhoto(photo)}
-              data-testid={`gallery-item-${i}`}
             >
-              <img
-                src={photo.src}
-                alt={photo.label}
-                className="absolute inset-0 w-full h-full object-cover"
-                loading="lazy"
-              />
-              {/* Overlay styling for Album subset context */}
-              {photo.isAlbum && (
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-pink-900/40 to-transparent p-2 opacity-80">
-                  <p className="text-[10px] text-white/90 text-center tracking-wider uppercase font-medium">
-                    School Album
-                  </p>
-                </div>
-              )}
-              <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+              <img src={photo.src} alt={photo.label} className="absolute inset-0 w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
             </motion.div>
           ))}
-        </motion.div>
+        </div>
+
+        {/* --- PILED UP ALBUM SECTION --- */}
+        <div className="w-full flex flex-col items-center mt-4 mb-8">
+          <div className="text-center mb-4">
+            <h3 className="font-serif text-lg font-bold" style={{ color: "#7a3555" }}>
+              School Photo Taking
+            </h3>
+            <p className="text-xs text-pink-400 font-light">
+              {isStackExpanded ? "Tap a picture to expand it ♡" : "Click the pile to open the album ♡"}
+            </p>
+          </div>
+
+          {/* Dynamic Stack / Expanded Layout */}
+          {!isStackExpanded ? (
+            /* Piled Up Deck Representation */
+            <div 
+              className="relative w-48 h-48 cursor-pointer mt-4 mb-6"
+              onClick={() => setIsStackExpanded(true)}
+            >
+              {albumPhotos.slice(0, 4).map((photo, index) => {
+                // Rotates and offsets top 4 images slightly to create an authentic messy pile look
+                const rotations = [-6, 4, -2, 5];
+                const xOffsets = [-8, 6, -2, 4];
+                return (
+                  <motion.div
+                    key={index}
+                    className="absolute inset-0 rounded-2xl border-2 border-white bg-white p-1.5 shadow-md overflow-hidden aspect-square"
+                    style={{
+                      zIndex: albumPhotos.length - index,
+                      rotate: `${rotations[index % rotations.length]}deg`,
+                      x: xOffsets[index % xOffsets.length],
+                    }}
+                    whileHover={{ scale: 1.05, rotate: "0deg", zIndex: 50 }}
+                  >
+                    <img src={photo.src} alt="Album Pile" className="w-full h-full object-cover rounded-xl pointer-events-none" />
+                  </motion.div>
+                );
+              })}
+            </div>
+          ) : (
+            /* Expanded Album View (Grid inside the folder) */
+            <motion.div 
+              className="grid grid-cols-2 gap-4 w-full p-4 rounded-3xl bg-pink-50/30 border border-pink-200/40 backdrop-blur-sm"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+            >
+              {albumPhotos.map((photo, i) => (
+                <motion.div
+                  key={i}
+                  className="relative aspect-square overflow-hidden cursor-pointer rounded-2xl border-2 border-white bg-white p-1 shadow-sm"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.03 }}
+                  whileHover={{ scale: 1.03 }}
+                  onClick={() => setSelectedPhoto(photo)}
+                >
+                  <img src={photo.src} alt={photo.label} className="absolute inset-0 w-full h-full object-cover rounded-xl" />
+                </motion.div>
+              ))}
+              
+              {/* Close/Collapse Pile Button */}
+              <button 
+                className="col-span-2 text-center text-xs text-pink-500 underline mt-2 hover:text-pink-700 transition-colors"
+                onClick={() => setIsStackExpanded(false)}
+              >
+                Collapse Album Pile ↑
+              </button>
+            </motion.div>
+          )}
+        </div>
 
         {/* Footer Note */}
         <motion.div
-          className="mt-8 letter-glass rounded-2xl px-6 py-4 text-center w-full"
+          className="letter-glass rounded-2xl px-6 py-4 text-center w-full"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
+          transition={{ delay: 0.5 }}
         >
-          <p
-            className="font-serif text-base italic leading-relaxed"
-            style={{ color: "#7a3555" }}
-          >
+          <p className="font-serif text-base italic leading-relaxed" style={{ color: "#7a3555" }}>
             "A picture is worth a thousand feelings." ✨
           </p>
           <p className="text-xs text-pink-300 mt-2 font-light">
@@ -159,9 +206,6 @@ export default function Gallery() {
             <motion.button
               className="absolute top-6 right-6 w-10 h-10 rounded-full flex items-center justify-center bg-white/15 text-white text-xl hover:bg-white/25 active:scale-95 transition-all"
               onClick={() => setSelectedPhoto(null)}
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
             >
               ✕
             </motion.button>
@@ -175,21 +219,13 @@ export default function Gallery() {
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Display Frame */}
               <div className="w-full aspect-[4/5] rounded-2xl overflow-hidden shadow-inner bg-stone-100">
-                <img
-                  src={selectedPhoto.src}
-                  alt={selectedPhoto.label}
-                  className="w-full h-full object-cover"
-                />
+                <img src={selectedPhoto.src} alt={selectedPhoto.label} className="w-full h-full object-cover" />
               </div>
 
-              {/* Text Layout Alignment */}
+              {/* Title Section formatting */}
               <div className="text-center px-2">
-                <p
-                  className="font-serif text-lg font-medium leading-snug tracking-wide"
-                  style={{ color: "#7a3555" }}
-                >
+                <p className="font-serif text-lg font-medium leading-snug tracking-wide" style={{ color: "#7a3555" }}>
                   {selectedPhoto.label}
                 </p>
                 <p className="text-xs text-pink-400/70 tracking-widest mt-1 uppercase font-light">
@@ -202,4 +238,4 @@ export default function Gallery() {
       </AnimatePresence>
     </motion.div>
   );
-              }
+}
