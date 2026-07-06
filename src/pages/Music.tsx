@@ -109,7 +109,7 @@ export default function Music() {
             className="font-serif text-3xl font-bold mt-1"
             style={{ color: "#7a3555" }}
           >
-            bad
+            seasons
           </h1>
           <p className="text-sm text-pink-400 font-light italic mt-1">
             by wave to earth
