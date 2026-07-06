@@ -4,6 +4,13 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const PETALS = ["🌸", "🌷", "🌹", "💮", "🌸"];
 
+// Declare global window property for TypeScript safety
+declare global {
+  interface Window {
+    bgMusic?: HTMLAudioElement;
+  }
+}
+
 function Petal({ style }: { style: React.CSSProperties }) {
   return (
     <span className="petal" style={style} aria-hidden="true">
@@ -26,9 +33,24 @@ export default function Landing() {
     }))
   );
 
+  // Safely starts background music on first user tap/interaction
+  const startBackgroundMusic = useCallback(() => {
+    if (!window.bgMusic) {
+      // Points to your public folder audio file path
+      const audio = new Audio("/1st-anniversary/music/background.mp3");
+      audio.loop = true;
+      audio.volume = 0.4; // Starts at 40% volume
+      window.bgMusic = audio;
+      audio.play().catch((err) => console.log("Audio play deferred:", err));
+    } else if (window.bgMusic.paused) {
+      window.bgMusic.play().catch((err) => console.log("Audio play deferred:", err));
+    }
+  }, []);
+
   const handleDigit = useCallback(
     (d: string) => {
       if (unlocking) return;
+      startBackgroundMusic(); // Kicks off music on interaction
       setDigits((prev) => {
         if (prev.length >= 4) return prev;
         const next = [...prev, d];
@@ -44,13 +66,14 @@ export default function Landing() {
         return next;
       });
     },
-    [unlocking, setLocation]
+    [unlocking, setLocation, startBackgroundMusic]
   );
 
   const handleDelete = useCallback(() => {
     if (unlocking) return;
+    startBackgroundMusic();
     setDigits((prev) => prev.slice(0, -1));
-  }, [unlocking]);
+  }, [unlocking, startBackgroundMusic]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -121,8 +144,9 @@ export default function Landing() {
           >
             Happy Anniversary
           </h1>
+          {/* 💻 CHANGE YOUR PASSCODE SCREEN TEXT BELOW HERE 💻 */}
           <p className="text-sm text-pink-400 font-light">
-            Enter our anniversary bebi
+            Enter your special text here ♡
           </p>
         </div>
 
@@ -214,4 +238,5 @@ export default function Landing() {
       </AnimatePresence>
     </motion.div>
   );
-}
+            }
+          
