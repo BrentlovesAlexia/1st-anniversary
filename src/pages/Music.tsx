@@ -1,13 +1,30 @@
+import { useEffect } from "react";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
 
-// wave to earth - "bad" official music video
-const YOUTUBE_VIDEO_ID = "6Q5xqNkCk7w";
+const YOUTUBE_VIDEO_ID = "nZqwQCLYgjk";
 
 export default function Music() {
   const [, setLocation] = useLocation();
-
   const notes = ["♩", "♪", "♫", "♬", "♩", "♪", "♫"];
+
+  useEffect(() => {
+    // Smoothly fades out the background music file when the video screen shows up
+    if (window.bgMusic && !window.bgMusic.paused) {
+      const audio = window.bgMusic;
+      const fadeInterval = setInterval(() => {
+        if (audio.volume > 0.05) {
+          audio.volume -= 0.05;
+        } else {
+          audio.volume = 0;
+          audio.pause();
+          clearInterval(fadeInterval);
+        }
+      }, 100);
+
+      return () => clearInterval(fadeInterval);
+    }
+  }, []);
 
   return (
     <motion.div
