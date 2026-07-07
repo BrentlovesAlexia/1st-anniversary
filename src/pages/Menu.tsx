@@ -106,7 +106,7 @@ export default function Menu() {
             Our World
           </h1>
           <p className="text-sm text-pink-400 italic font-light">
-            Choose where to go, my love
+            Choose where to go, my Muchiee 
           </p>
         </motion.div>
 
@@ -157,7 +157,7 @@ export default function Menu() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
         >
-          Made with love, for you ♡
+          Made with love, Gawa koto bebi, dw :>
         </motion.p>
       </div>
     </motion.div>
