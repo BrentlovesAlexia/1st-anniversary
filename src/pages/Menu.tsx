@@ -157,7 +157,7 @@ export default function Menu() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
         >
-          Made with love, Gawa koto bebi, dw :>
+          Made with love, Gawa koto bebi, dw
         </motion.p>
       </div>
     </motion.div>
