@@ -5,28 +5,28 @@ import { motion, AnimatePresence } from "framer-motion";
 const pages = [
   {
     id: 1,
-    title: "My Dearest Love",
-    content: `Happy 1st anniversary, my love! Sobrang saya ko lang na umabot tayo sa milestone na 'to. Pagtingin ko sa lahat ng pinagdaanan natin nitong nakaraang taon, narealize ko na lahat ng hirap at saya ay worth it kasi mas lalo tayong pinatatag nito at mas nakilala ko pa ang pagkatao mo.
+    title: "Appreciation, My cutie",
+    content: `Happy 1st anniversary, bebii, so like thank you for accepting and staying even though I'm real red flag myself, I'm sorry for everything I've done bad to u, you're suchh a cutie talaga :>, i hope na tumagal tong rs natin hanggang sa pagtanda natin, feel ko kasi ikaw na yung para sakin.
 
-Alam ko na hindi laging madali ang lahat at aminado ako na marami tayong pagsubok na kinaharap, pero proud ako sa kung paano natin hinarap lahat nang magkasama. Today is all about us at ipagdiwang natin ang bond na patuloy nating binubuo araw-araw.`,
+I know na indi naging madali yung samahan natin and maraming pagsubog na tayong nadaanan, but still you chose to stay even tho im giving up.`,
     decoration: "✉️",
   },
   {
     id: 2,
-    title: "From the Depths",
-    content: `Gusto ko lang maging tapat sa'yo na alam ko namang hindi laging perfect ang samahan natin. Alam ko na minsan ay may mga hindi pagkakaunawaan tayo na nagiging sanhi ng sakit o lungkot, pero sana lagi mong tatandaan na malalim, totoo, at buo ang pagmamahal ko sa'yo.
+    title: "Appreciation the 2nd",
+    content: `Gusto ko lang maging tapat sayo na alam ko namang hindi laging perfect ang samahan natin. Alam ko na minsan is may mga hindi pagkakaunawaan tayo na nagiging reason ng sakit o lungkot, pero sana lagi mong tatandaan na malalim, totoo, at buo ang pagmamahal ko sayo.
 
-Kahit sa mga pagkakataon na hindi mo makita o maramdaman ang pagmamahal ko dahil sa pagod, pride, o stress, gusto ko lang malaman mo na ikaw pa rin ang tanging mahal ko. Lahat ng ginagawa ko ay para sa atin, at kahit hindi ko laging nasasabi o naipakita nang tama, sana ramdam mo pa rin kung gaano ka kahalaga sa buhay ko.`,
+Kahit sa mga pagkakataon na hindi mo makita o maramdaman ang love ko dahil sa pagod, pride, o stress, gusto ko lang malaman mo na ikaw pa rin ang lovey lovey ko WAHAHAHAH. Lahat ng ginagawa ko is para satin, at kahit hindi ko laging nasasabi o naipakita nang tama, sana ramdam mo pa rin kung gaano ka kahalaga sa buhay ko.`,
     decoration: "💕",
   },
   {
     id: 3,
-    title: "Always & Forever",
-    content: `Sobrang grateful ako sa lahat ng memories na nabuo natin, mapa-masaya man na nagpatawa sa atin o 'yung mahihirap na naging dahilan para lumago tayo bilang magkapareha.
+    title: "Together us",
+    content: `Sobrang grateful ako sa lahat ng memories na nabuo natin, mapamasaya man na nagpatawa sa atin o 'yung mahihirap na naging dahilan para lumago tayo bilang couples, ang kyot.
 
-Ang tanging hiling ko lang ngayong araw ay patuloy tayong piliin ang isa't isa araw-araw, kahit gaano pa kahirap ang buhay o ano pa ang dumating na problema. Sana tumagal tayo hanggang sa dulo at malampasan pa natin ang mas marami pang taon nang magkasama.
+Ang one and only wish ko lang ngayong araw is patuloy nating piliin ang eachother everyday, kahit gaano pa kahirap ang buhay o ano pa ang dumating na problem. Sana tumagal tayo hanggang sa dulo at malampasan pa natin ang mas marami pang taon nang magkasama.
 
-Thank you for being my rock at sa hindi pagbitaw sa akin. Mahal na mahal kita, happy anniversary! 💗`,
+Thank you for being my cutie patootie at sa hindi pagbitaw sa akin. Mahal na mahal kita, happy anniversary! 💗`,
     decoration: "💌",
   },
 ];
